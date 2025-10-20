@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "1f0cb1d7-8018-4ad4-bd4c-8bbabce0a9f1",
+      "cell_type": "code",
+      "source": "%pip install duckdb\n%pip install pandas\n%pip install magic-duckdb==0.1.10\n%load_ext magic_duckdb",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": 1
+    },
+    {
+      "id": "dd001790-317d-414a-b58c-4b2c524825ea",
+      "cell_type": "code",
+      "source": "%%dql\ncreate table events as (\n    select * from 'data/events.tsv'\n);\ncreate table ads as (\n    select * from 'data/ads.tsv'\n);",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": 6
+    },
+    {
+      "id": "3557a662-a999-4245-86aa-39a05d6e17b3",
+      "cell_type": "code",
+      "source": "%%dql\nselect * from events",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "execution_count": 9,
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "  event_id  ad_id   source  event_type       date  hour\n0   xAbcd3      1      iOS  impression 2020-12-01    13\n1   bf3VEc      1      iOS  impression 2020-12-01    15\n2   bfE4gc      1  Android       click 2020-12-14     7\n3   hTeGs5      3      Web  conversion 2020-12-01    12\n4   g5ht7f      3  Android       click 2020-12-07    23\n5   if5s3v      4      Web  conversion 2020-12-14     8",
+            "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>event_id</th>\n      <th>ad_id</th>\n      <th>source</th>\n      <th>event_type</th>\n      <th>date</th>\n      <th>hour</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>xAbcd3</td>\n      <td>1</td>\n      <td>iOS</td>\n      <td>impression</td>\n      <td>2020-12-01</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>bf3VEc</td>\n      <td>1</td>\n      <td>iOS</td>\n      <td>impression</td>\n      <td>2020-12-01</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>bfE4gc</td>\n      <td>1</td>\n      <td>Android</td>\n      <td>click</td>\n      <td>2020-12-14</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>hTeGs5</td>\n      <td>3</td>\n      <td>Web</td>\n      <td>conversion</td>\n      <td>2020-12-01</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>g5ht7f</td>\n      <td>3</td>\n      <td>Android</td>\n      <td>click</td>\n      <td>2020-12-07</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>if5s3v</td>\n      <td>4</td>\n      <td>Web</td>\n      <td>conversion</td>\n      <td>2020-12-14</td>\n      <td>8</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+          },
+          "metadata": {}
+        }
+      ],
+      "execution_count": 9
+    },
+    {
+      "id": "d2a52707-1ea4-4d13-9dbe-41214941f618",
+      "cell_type": "code",
+      "source": "%%dql\nselect * from ads",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "execution_count": 10,
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": "   ad_id  campaign_id    status\n0      1            1    active\n1      2            1  inactive\n2      3            1    active\n3      4            2    active\n4      5            2  inactive\n5      6            2  inactive",
+            "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>ad_id</th>\n      <th>campaign_id</th>\n      <th>status</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>1</td>\n      <td>1</td>\n      <td>active</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>2</td>\n      <td>1</td>\n      <td>inactive</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>3</td>\n      <td>1</td>\n      <td>active</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>4</td>\n      <td>2</td>\n      <td>active</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>5</td>\n      <td>2</td>\n      <td>inactive</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>6</td>\n      <td>2</td>\n      <td>inactive</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+          },
+          "metadata": {}
+        }
+      ],
+      "execution_count": 10
+    },
+    {
+      "id": "f0cbdcb0-d4c3-46c4-b4bc-d700afb765dc",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "id": "b6fba9d4-5bdb-4a2a-a667-8d5f29a54105",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
