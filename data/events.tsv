@@ -1,0 +1,7 @@
+event_id	ad_id	source	event_type	date	hour
+xAbcd3	1	iOS	impression	01/12/2020	13
+bf3VEc	1	iOS	impression	01/12/2020	15
+bfE4gc	1	Android	click	14/12/2020	7
+hTeGs5	3	Web	conversion	01/12/2020	12
+g5ht7f	3	Android	click	07/12/2020	23
+if5s3v	4	Web	conversion	14/12/2020	8
